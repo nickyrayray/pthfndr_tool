@@ -45,4 +45,19 @@ public class AbilityScore {
         return (int)Math.floor((score-10)/2);
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(o == null){
+            return false;
+        }
+        if(o == this){
+            return true;
+        }
+        if(!(o instanceof AbilityScore)){
+            return false;
+        }
+        AbilityScore other = (AbilityScore)o;
+        return (other.getScore() == this.score && other.getName().equals(this.name));
+    }
+
 }
