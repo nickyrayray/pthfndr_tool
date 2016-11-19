@@ -29,10 +29,6 @@ public class AbilityScore {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getScore() {
         return score;
     }
@@ -42,7 +38,7 @@ public class AbilityScore {
     }
 
     public int getModifier(){
-        return (int)Math.floor((score-10)/2);
+        return (int)Math.floor((score - 10.0)/2.0);
     }
 
     @Override
