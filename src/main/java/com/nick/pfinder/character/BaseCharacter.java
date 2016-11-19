@@ -1,6 +1,6 @@
 package com.nick.pfinder.character;
 
-import com.nick.pfinder.character.components.AbilityScoreCollection;
+import com.nick.pfinder.character.components.abilityscore.AbilityScoreCollection;
 import com.nick.pfinder.interfaces.Character;
 
 /**

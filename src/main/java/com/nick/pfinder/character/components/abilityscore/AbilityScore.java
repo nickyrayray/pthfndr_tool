@@ -1,4 +1,4 @@
-package com.nick.pfinder.character.components;
+package com.nick.pfinder.character.components.abilityscore;
 
 /**
  * Created by nickyrayray on 11/17/16.

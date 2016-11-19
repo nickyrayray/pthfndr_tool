@@ -1,4 +1,4 @@
-package com.nick.pfinder.character.components;
+package com.nick.pfinder.character.components.abilityscore;
 
 import java.util.HashMap;
 

@@ -1,5 +1,6 @@
 package com.nick.pfinder.character.components;
 
+import com.nick.pfinder.character.components.abilityscore.AbilityScore;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
