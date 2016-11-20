@@ -1,5 +1,7 @@
 package com.nick.pfinder.character.components.skill;
 
+import com.nick.pfinder.character.components.abilityscore.AbilityScore;
+
 /**
  * Created by nickyrayray on 11/19/16.
  */
@@ -40,5 +42,36 @@ public class Skill {
     public static final String SURVIVAL = "Survival";
     public static final String SWIM = "Swim";
     public static final String USE_MAGIC_DEVICE = "Use Magic Device";
+
+    private String name;
+    private AbilityScore abilityScore;
+    private int ranks;
+    private boolean isClassSkill;
+
+    public Skill(String name, AbilityScore abilityScore, boolean isClassSkill){
+        this.name = name;
+        this.abilityScore = abilityScore;
+        this.ranks = 0;
+        this.isClassSkill = isClassSkill;
+    }
+
+    public Skill(String name, AbilityScore abilityScore, int ranks, boolean isClassSkill){
+        this.name = name;
+        this.abilityScore = abilityScore;
+        this.ranks = ranks;
+        this.isClassSkill = isClassSkill;
+    }
+
+    public int getRanks(){
+        return ranks;
+    }
+
+    public void increaseRanks(int amount){
+        this.ranks += amount;
+    }
+
+    public String getName(){
+        return name;
+    }
 
 }
