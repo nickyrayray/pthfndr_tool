@@ -15,7 +15,7 @@ public class Skill {
     public static final String DIPLOMACY = "Diplomacy";
     public static final String DISABLE_DEVICE = "Disable Device";
     public static final String DISGUISE = "Disguise";
-    public static final String ESACAPE_ARTIST = "Escape Artist";
+    public static final String ESCAPE_ARTIST = "Escape Artist";
     public static final String FLY = "Fly";
     public static final String HANDLE_ANIMAL = "Handle Animal";
     public static final String HEAL = "Heal";
@@ -34,7 +34,7 @@ public class Skill {
     public static final String PERCEPTION = "Perception";
     public static final String PERFORM = "Perform";
     public static final String PROFESSION = "Profession";
-    public static final String Ride = "RIDE";
+    public static final String RIDE = "Ride";
     public static final String SENSE_MOTIVE = "Sense Motive";
     public static final String SLEIGHT_OF_HAND = "Sleight Of Hand";
     public static final String SPELLCRAFT = "Spellcraft";
