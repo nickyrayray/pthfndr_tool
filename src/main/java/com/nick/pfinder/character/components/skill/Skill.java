@@ -74,4 +74,8 @@ public class Skill {
         return name;
     }
 
+    public void setClassSkill(){
+        this.isClassSkill = true;
+    }
+
 }
