@@ -78,4 +78,9 @@ public class Skill {
         this.isClassSkill = true;
     }
 
+    public int calculateTotal(){
+        int classSkillSection = (isClassSkill && ranks > 0) ? 3 : 0;
+        return ranks + abilityScore.getModifier() + classSkillSection;
+    }
+
 }

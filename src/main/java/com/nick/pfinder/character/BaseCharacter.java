@@ -2,11 +2,12 @@ package com.nick.pfinder.character;
 
 import com.nick.pfinder.character.components.abilityscore.AbilityScore;
 import com.nick.pfinder.character.components.abilityscore.AbilityScoreCollection;
-import com.nick.pfinder.character.components.skill.Skill;
 import com.nick.pfinder.character.components.skill.SkillSet;
+import com.nick.pfinder.character.pojo.CharacterPojo;
 import com.nick.pfinder.interfaces.Character;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -53,5 +54,10 @@ public class BaseCharacter implements Character{
     @Override
     public AbilityScore getCha() {
         return abilityScoreCollection.getCha();
+    }
+
+    @Override
+    public CharacterPojo getPojo(){
+
     }
 }

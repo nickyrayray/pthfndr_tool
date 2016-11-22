@@ -1,6 +1,8 @@
 package com.nick.pfinder.character.components.abilityscore;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by nickyrayray on 11/17/16.
@@ -41,6 +43,13 @@ public class AbilityScoreCollection {
 
     public AbilityScore getCha(){
         return abilityScores.get(AbilityScore.CHARISMA);
+    }
+
+    public Map<String, Integer> getAbilityScoreCollectionPojo(){
+        return abilityScores.entrySet().stream().collect(Collectors.toMap(
+                e -> e.getKey(),
+                e -> e.getValue().getScore()
+        ));
     }
 
 

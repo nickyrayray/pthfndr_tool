@@ -2,10 +2,15 @@ package com.nick.pfinder.character.components.skill;
 
 import com.nick.pfinder.character.components.abilityscore.AbilityScoreCollection;
 import com.nick.pfinder.interfaces.Character;
+import org.glassfish.jersey.server.spi.ContainerLifecycleListener;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Created by nickyrayray on 11/19/16.
@@ -55,6 +60,13 @@ public class SkillSet {
 
     public Skill getSkill(String key){
         return skillSet.get(key);
+    }
+
+    public Map<String, Integer> getSkillSetPojo(){
+        return skillSet.entrySet().stream().collect(Collectors.toMap(
+                e -> e.getKey(),
+                e -> e.getValue().calculateTotal()
+        ));
     }
 
 }
