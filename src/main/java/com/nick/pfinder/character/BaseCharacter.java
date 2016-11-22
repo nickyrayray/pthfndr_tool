@@ -58,6 +58,6 @@ public class BaseCharacter implements Character{
 
     @Override
     public CharacterPojo getPojo(){
-
+        return null;
     }
 }
