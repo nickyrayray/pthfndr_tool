@@ -2,12 +2,12 @@ package com.nick.pfinder.character.components.skill;
 
 import com.nick.pfinder.character.components.abilityscore.AbilityScoreCollection;
 import com.nick.pfinder.interfaces.Character;
+import com.nick.pfinder.server.PathfinderResourceConfig;
 import org.glassfish.jersey.server.spi.ContainerLifecycleListener;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.security.Key;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -59,7 +59,16 @@ public class SkillSet {
     }
 
     public Skill getSkill(String key){
-        return skillSet.get(key);
+        Skill found = skillSet.get(key);
+        if(found != null){
+            return found;
+        }
+        Optional<String> skillSought = skillSet.keySet().stream().filter(s -> s.toLowerCase().contains(key.toLowerCase())).findFirst();
+        if(skillSought.isPresent()){
+            return skillSet.get(skillSought.get());
+        } else {
+            return null;
+        }
     }
 
     public Map<String, Integer> getSkillSetPojo(){

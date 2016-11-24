@@ -21,6 +21,11 @@ public class BaseCharacter implements Character{
     private AbilityScoreCollection abilityScoreCollection;
     private SkillSet skillSet;
 
+    /*TODO: This*/
+    private String name;
+    private int level;
+    private String race;
+
     public BaseCharacter(){
         abilityScoreCollection = new AbilityScoreCollection();
         skillSet = new SkillSet(abilityScoreCollection, classSkills);

@@ -83,4 +83,22 @@ public class Skill {
         return ranks + abilityScore.getModifier() + classSkillSection;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(o == null){
+            return false;
+        }
+        if(o == this){
+            return true;
+        }
+        if(!(o instanceof Skill)){
+            return false;
+        }
+        Skill other = (Skill)o;
+        return (other.name.equals(this.name) &&
+                other.ranks == this.ranks &&
+                other.abilityScore.equals(this.abilityScore) &&
+                other.isClassSkill == this.isClassSkill);
+    }
+
 }
