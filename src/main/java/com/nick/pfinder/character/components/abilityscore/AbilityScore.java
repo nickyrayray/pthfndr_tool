@@ -12,6 +12,8 @@ public class AbilityScore {
     public static final String WISDOM = "Wisdom";
     public static final String CHARISMA = "Charisma";
 
+    public static final String[] ABILITIES = {STRENGTH, DEXTERITY, CONSTITUTION, INTELLIGENCE, WISDOM, CHARISMA};
+
     private String name;
     private int score;
 
