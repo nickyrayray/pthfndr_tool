@@ -4,9 +4,5 @@
        xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <bean name="resourceConfig" class="com.nick.pfinder.server.PathfinderResourceConfig"/>
-    <bean name="character" class="com.nick.pfinder.character.BaseCharacter">
-        <constructor-arg name="testInt" value="0"/>
-    </bean>
 
 </beans>
