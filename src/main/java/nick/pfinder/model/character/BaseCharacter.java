@@ -3,6 +3,7 @@ package nick.pfinder.model.character;
 import nick.pfinder.model.character.ability.AbilityScore;
 import nick.pfinder.model.character.attributes.Alignment;
 import nick.pfinder.model.character.attributes.Size;
+import nick.pfinder.model.character.basic.BasicInfo;
 import nick.pfinder.model.character.hitpoints.HitPoints;
 import nick.pfinder.model.character.skill.Skill;
 import nick.pfinder.model.items.Item;
@@ -17,12 +18,7 @@ import java.util.Map;
  */
 public abstract class BaseCharacter implements Character{
 
-    private String name;
-    private Integer age;
-    private Alignment alignment;
-    private Integer level;
-    private Size size;
-    private String gender;
+    private BasicInfo basicInfo;
 
     private HitPoints hitPoints;
 
@@ -41,52 +37,12 @@ public abstract class BaseCharacter implements Character{
     private Weapon equippedWeapon;
     private Armor equippedArmor;
 
-    public String getName() {
-        return name;
+    public BasicInfo getBasicInfo() {
+        return basicInfo;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public Alignment getAlignment() {
-        return alignment;
-    }
-
-    public void setAlignment(Alignment alignment) {
-        this.alignment = alignment;
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
-
-    public Size getSize() {
-        return size;
-    }
-
-    public void setSize(Size size) {
-        this.size = size;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setBasicInfo(BasicInfo basicInfo) {
+        this.basicInfo = basicInfo;
     }
 
     public HitPoints getHitPoints() {
