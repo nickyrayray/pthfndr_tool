@@ -10,7 +10,6 @@ public class PfinderCharacterCacheImpl implements PfinderCache<UUID, Character> 
     private Map<UUID, CacheMetadataWrapper> characters;
     private Set<UUID> currentlyAccessed;
 
-    private static final Object CHARACTER_LOCK = new Object();
     private static final Object EDITOR_LOCK = new Object();
     private static final Integer MAX_IN_CACHE = 30;
     private static final Long TTL_IN_MILLIS = 600000L;
@@ -21,45 +20,102 @@ public class PfinderCharacterCacheImpl implements PfinderCache<UUID, Character> 
     }
 
     @Override
-    public void refresh() {
-        synchronized (CHARACTER_LOCK){
-
-        }
+    public synchronized void refresh() {
+        refreshImpl();
     }
 
     @Override
-    public Character evict(UUID key) {
-        return null;
-    }
-
-    @Override
-    public void insert(UUID key, Character value){
-        synchronized (CHARACTER_LOCK){
-            CacheMetadataWrapper cacheMetadataWrapper = characters.get(key);
-            if(cacheMetadataWrapper != null){
-                cacheMetadataWrapper.update();
-            } else {
-                cacheMetadataWrapper = new CacheMetadataWrapper(value);
-                characters.put(key, cacheMetadataWrapper);
+    public synchronized void insert(UUID key, Character value){
+        CacheMetadataWrapper cacheMetadataWrapper = characters.get(key);
+        if(cacheMetadataWrapper != null){
+            cacheMetadataWrapper.update();
+        } else {
+            if(characters.size() >= MAX_IN_CACHE){
+                refreshImpl();
             }
+            if(characters.size() >= MAX_IN_CACHE){
+                freeUpSpaceIfNeeded();
+            }
+            cacheMetadataWrapper = new CacheMetadataWrapper(value);
+            characters.put(key, cacheMetadataWrapper);
         }
     }
 
     @Override
     public Character get(UUID key) {
-        synchronized (CHARACTER_LOCK){
-            CacheMetadataWrapper cacheMetadataWrapper = characters.get(key);
+        CacheMetadataWrapper cacheMetadataWrapper;
+        synchronized (this) {
+            cacheMetadataWrapper = characters.get(key);
             if(cacheMetadataWrapper != null){
-                synchronized (EDITOR_LOCK){
-                    if(!currentlyAccessed.contains(key)){
-                        currentlyAccessed.add(key);
-                        cacheMetadataWrapper.update();
-                        return cacheMetadataWrapper.getCharacter();
-                    } //TODO: Throw exception if it is being edited already
+                cacheMetadataWrapper.update();
+            }
+        }
+        if(cacheMetadataWrapper != null){
+            synchronized (EDITOR_LOCK) {
+                while (currentlyAccessed.contains(key)) {
+                    try {
+                        EDITOR_LOCK.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
                 }
-            } // TODO: Handle case where the character is not in the cache
+                currentlyAccessed.add(key);
+            }
+            return cacheMetadataWrapper.getCharacter();
         }
         return null;
+    }
+
+    @Override
+    public void doneEditing(UUID key) {
+        synchronized (EDITOR_LOCK){
+            if(currentlyAccessed.contains(key)){
+                currentlyAccessed.remove(key);
+            } else {
+                //TODO: LOG WEIRD BEHAVIOR
+            }
+            EDITOR_LOCK.notify();
+        }
+    }
+
+
+    private void evict(UUID key) {
+        characters.remove(key);
+    }
+
+    private void freeUpSpaceIfNeeded(){
+        if(characters.size() >= MAX_IN_CACHE){
+            refresh();
+            if(characters.size() >= MAX_IN_CACHE){
+                UUID keyOfOldest = findKeyOfOldest();
+                evict(keyOfOldest);
+            }
+        }
+    }
+
+    private UUID findKeyOfOldest(){
+        Optional<Map.Entry<UUID, CacheMetadataWrapper>> minUUID = characters.entrySet()
+                .stream()
+                .min(Comparator.comparingLong(e -> e.getValue().getLastAccessed()));
+        if(minUUID.isPresent()){
+            return minUUID.get().getKey();
+        }
+        return null;
+    }
+
+    private void refreshImpl(){
+        characters.entrySet().forEach(e -> {
+            CacheMetadataWrapper cacheMetadataWrapper = e.getValue();
+            if((System.currentTimeMillis() - cacheMetadataWrapper.getLastAccessed()) >= TTL_IN_MILLIS){
+                characters.remove(e.getKey());
+                synchronized (EDITOR_LOCK){
+                    if(currentlyAccessed.contains(e.getKey())){
+                        currentlyAccessed.remove(e.getKey());
+                    }
+                }
+            }
+        });
     }
 
     private class CacheMetadataWrapper{
@@ -75,11 +131,11 @@ public class PfinderCharacterCacheImpl implements PfinderCache<UUID, Character> 
             return character;
         }
 
-        void update(){
+        synchronized void update(){
             this.lastAccessed = System.currentTimeMillis();
         }
 
-        Long getLastAccessed(){
+        synchronized Long getLastAccessed(){
             return this.lastAccessed;
         }
     }
