@@ -11,12 +11,14 @@ public class PfinderCharacterCacheImpl implements PfinderCache<UUID, Character> 
     private Set<UUID> currentlyAccessed;
 
     private static final Object EDITOR_LOCK = new Object();
-    private static final Integer MAX_IN_CACHE = 30;
-    private static final Long TTL_IN_MILLIS = 600000L;
+    private final Integer MAX_IN_CACHE;
+    private final Long TTL_IN_MILLIS;
 
-    public PfinderCharacterCacheImpl(){
+    public PfinderCharacterCacheImpl(Integer MAX_IN_CACHE, Long TTL_IN_MILIS){
         this.characters = new HashMap<>();
         this.currentlyAccessed = new HashSet<>();
+        this.MAX_IN_CACHE = MAX_IN_CACHE;
+        this.TTL_IN_MILLIS = TTL_IN_MILIS;
     }
 
     @Override
