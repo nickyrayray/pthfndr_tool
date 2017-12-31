@@ -32,12 +32,7 @@ public class PfinderCharacterCacheImpl implements PfinderCache<UUID, Character> 
         if(cacheMetadataWrapper != null){
             cacheMetadataWrapper.update();
         } else {
-            if(characters.size() >= MAX_IN_CACHE){
-                refreshImpl();
-            }
-            if(characters.size() >= MAX_IN_CACHE){
-                freeUpSpaceIfNeeded();
-            }
+            freeUpSpaceIfNeeded();
             cacheMetadataWrapper = new CacheMetadataWrapper(value);
             characters.put(key, cacheMetadataWrapper);
         }
@@ -92,7 +87,7 @@ public class PfinderCharacterCacheImpl implements PfinderCache<UUID, Character> 
 
     private void freeUpSpaceIfNeeded(){
         if(characters.size() >= MAX_IN_CACHE){
-            refresh();
+            refreshImpl();
             if(characters.size() >= MAX_IN_CACHE){
                 UUID keyOfOldest = findKeyOfOldest();
                 evict(keyOfOldest);
@@ -111,17 +106,19 @@ public class PfinderCharacterCacheImpl implements PfinderCache<UUID, Character> 
     }
 
     private void refreshImpl(){
-        characters.entrySet().forEach(e -> {
+        Iterator<Map.Entry<UUID, CacheMetadataWrapper>> iterator = characters.entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry<UUID, CacheMetadataWrapper> e = iterator.next();
             CacheMetadataWrapper cacheMetadataWrapper = e.getValue();
             if((System.currentTimeMillis() - cacheMetadataWrapper.getLastAccessed()) >= TTL_IN_MILLIS){
-                characters.remove(e.getKey());
+                iterator.remove();
                 synchronized (EDITOR_LOCK){
                     if(currentlyAccessed.contains(e.getKey())){
                         currentlyAccessed.remove(e.getKey());
                     }
                 }
             }
-        });
+        }
     }
 
     private class CacheMetadataWrapper{

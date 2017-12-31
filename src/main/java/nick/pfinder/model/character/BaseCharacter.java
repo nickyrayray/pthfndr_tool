@@ -3,7 +3,6 @@ package nick.pfinder.model.character;
 import nick.pfinder.model.character.ability.AbilityScore;
 import nick.pfinder.model.character.attributes.Alignment;
 import nick.pfinder.model.character.attributes.Size;
-import nick.pfinder.model.character.basic.BasicInfo;
 import nick.pfinder.model.character.hitpoints.HitPoints;
 import nick.pfinder.model.character.skill.Skill;
 import nick.pfinder.model.items.Item;
@@ -18,7 +17,7 @@ import java.util.Map;
  */
 public abstract class BaseCharacter implements Character{
 
-    private BasicInfo basicInfo;
+    private Map<String, String> basicInfo;
 
     private HitPoints hitPoints;
 
@@ -37,11 +36,11 @@ public abstract class BaseCharacter implements Character{
     private Weapon equippedWeapon;
     private Armor equippedArmor;
 
-    public BasicInfo getBasicInfo() {
+    public Map<String, String> getBasicInfo() {
         return basicInfo;
     }
 
-    public void setBasicInfo(BasicInfo basicInfo) {
+    public void setBasicInfo(Map<String, String> basicInfo) {
         this.basicInfo = basicInfo;
     }
 
