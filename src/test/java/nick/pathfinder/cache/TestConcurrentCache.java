@@ -7,9 +7,7 @@ import nick.pfinder.model.character.Character;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -52,16 +50,48 @@ public class TestConcurrentCache {
     }
 
     @Test
-    public void testInsertAtMaxRemovesOneWithMostTimeSinceLastAccessed(){
+    public void testInsertAtMaxRemovesOneWithMostTimeSinceLastAccessed() throws InterruptedException {
         UUID oldest = UUID.randomUUID();
         cache.insert(oldest, new TestCharacter());
         assertNotNull(cache.get(oldest));
+        Thread.sleep(5000);
         for(int i = 1; i < MAX_IN_CACHE; i++){
             cache.insert(UUID.randomUUID(), new TestCharacter());
         }
         assertEquals(cache.getCacheSize(), MAX_IN_CACHE);
         cache.insert(UUID.randomUUID(), new TestCharacter());
         assertNull(cache.get(oldest));
+    }
+
+    @Test
+    public void testThreadBlockedOnSecondAccessCallToIdUntilManuallyReleased() throws InterruptedException {
+        UUID id = UUID.randomUUID();
+        cache.insert(id, new TestCharacter());
+        assertNotNull(cache.get(id));
+        Thread secondAccess = new Thread(() -> cache.get(id));
+        secondAccess.start();
+        Thread.sleep(3000);
+        assertTrue(secondAccess.getState().equals(Thread.State.WAITING));
+        cache.doneEditing(id);
+        Thread.sleep(3000);
+        assertTrue(secondAccess.getState().equals(Thread.State.TERMINATED));
+    }
+
+    @Test
+    public void testThreadDoesNotBlockOnMultipleAccessCallsToDifferentIds() throws InterruptedException {
+        List<Thread> threads = new ArrayList<>();
+        for(int i = 0; i < MAX_IN_CACHE; i++){
+            Thread thread = new Thread(() -> {
+                UUID id = UUID.randomUUID();
+                cache.insert(id, new TestCharacter());
+                cache.get(id);
+            });
+            thread.start();
+        }
+        Thread.sleep(6000);
+        for(Thread t : threads){
+            assertTrue(t.getState().equals(Thread.State.TERMINATED));
+        }
     }
 
 
