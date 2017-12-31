@@ -9,4 +9,6 @@ public interface PfinderCache<K, V> {
     V get(K key);
 
     void doneEditing(K key);
+
+    Integer getCacheSize();
 }

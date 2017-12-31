@@ -81,6 +81,10 @@ public class PfinderCharacterCacheImpl implements PfinderCache<UUID, Character> 
         }
     }
 
+    @Override
+    public synchronized Integer getCacheSize() {
+        return characters.size();
+    }
 
     private void evict(UUID key) {
         characters.remove(key);
