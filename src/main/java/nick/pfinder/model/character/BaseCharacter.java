@@ -4,6 +4,7 @@ import nick.pfinder.model.character.ability.AbilityScore;
 import nick.pfinder.model.character.attributes.Alignment;
 import nick.pfinder.model.character.attributes.Size;
 import nick.pfinder.model.character.hitpoints.HitPoints;
+import nick.pfinder.model.character.save.Save;
 import nick.pfinder.model.character.skill.Skill;
 import nick.pfinder.model.items.Item;
 import nick.pfinder.model.items.armor.Armor;
@@ -17,7 +18,16 @@ import java.util.Map;
  */
 public abstract class BaseCharacter implements Character{
 
-    private Map<String, String> basicInfo;
+    //Basic info
+    private String name;
+    private String playerName;
+    private Alignment alignment;
+    private Integer level;
+    private String deity;
+    private String race;
+    private Size size;
+    private String gender;
+    private Integer age;
 
     private HitPoints hitPoints;
 
@@ -27,21 +37,110 @@ public abstract class BaseCharacter implements Character{
 
     private List<Integer> baseAttackBonus;
 
-    private Integer will;
-    private Integer fortitude;
-    private Integer reflex;
+    private Save will;
+    private Save fortitude;
+    private Save reflex;
 
     private List<Item> items;
-
     private Weapon equippedWeapon;
     private Armor equippedArmor;
 
-    public Map<String, String> getBasicInfo() {
-        return basicInfo;
+    public BaseCharacter(BaseCharacter baseCharacter){}
+
+    public String getName() {
+        return name;
     }
 
-    public void setBasicInfo(Map<String, String> basicInfo) {
-        this.basicInfo = basicInfo;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public Alignment getAlignment() {
+        return alignment;
+    }
+
+    public void setAlignment(Alignment alignment) {
+        this.alignment = alignment;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public String getDeity() {
+        return deity;
+    }
+
+    public void setDeity(String deity) {
+        this.deity = deity;
+    }
+
+    public String getRace() {
+        return race;
+    }
+
+    public void setRace(String race) {
+        this.race = race;
+    }
+
+    public Size getSize() {
+        return size;
+    }
+
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public Save getWill() {
+        return will;
+    }
+
+    public void setWill(Save will) {
+        this.will = will;
+    }
+
+    public Save getFortitude() {
+        return fortitude;
+    }
+
+    public void setFortitude(Save fortitude) {
+        this.fortitude = fortitude;
+    }
+
+    public Save getReflex() {
+        return reflex;
+    }
+
+    public void setReflex(Save reflex) {
+        this.reflex = reflex;
     }
 
     public HitPoints getHitPoints() {
@@ -74,30 +173,6 @@ public abstract class BaseCharacter implements Character{
 
     public void setBaseAttackBonus(List<Integer> baseAttackBonus) {
         this.baseAttackBonus = baseAttackBonus;
-    }
-
-    public Integer getWill() {
-        return will;
-    }
-
-    public void setWill(Integer will) {
-        this.will = will;
-    }
-
-    public Integer getFortitude() {
-        return fortitude;
-    }
-
-    public void setFortitude(Integer fortitude) {
-        this.fortitude = fortitude;
-    }
-
-    public Integer getReflex() {
-        return reflex;
-    }
-
-    public void setReflex(Integer reflex) {
-        this.reflex = reflex;
     }
 
     public List<Item> getItems() {
