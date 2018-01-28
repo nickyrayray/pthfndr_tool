@@ -198,4 +198,6 @@ public abstract class BaseCharacter implements Character{
     public void setEquippedArmor(Armor equippedArmor) {
         this.equippedArmor = equippedArmor;
     }
+
+    public abstract List<String> getClassSkills();
 }
