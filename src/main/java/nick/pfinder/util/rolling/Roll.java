@@ -1,31 +1,40 @@
 package nick.pfinder.util.rolling;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by nickyrayray on 8/26/17.
+ * Created by nickyrayray on 2/27/18.
  */
 public class Roll {
 
-    List<Integer> rolls;
+    private List<Integer> rollResults;
+    private List<Integer> undefinedModifiers;
+    private String rollString;
+    private Integer result;
 
-    public Roll(List<Integer> rolls){
-        this.rolls = rolls;
+    public Roll(List<Integer> rollResults, List<Integer> undefinedModifiers, String rollString){
+        this.rollResults = rollResults;
+        this.undefinedModifiers = undefinedModifiers;
+        this.rollString = rollString;
     }
 
-    public Roll(){
-        this.rolls = new ArrayList<>();
+    public List<Integer> getRollResults() {
+        return rollResults;
     }
 
-    public Roll withRoll(Integer amount){
-        this.rolls.add(amount);
-        return this;
+    public List<Integer> getUndefinedModifiers() {
+        return undefinedModifiers;
     }
 
-    public Roll withRolls(List<Integer> amounts){
-        this.rolls.addAll(amounts);
-        return this;
+    public String getRollString() {
+        return rollString;
     }
 
+    public Integer getResult(){
+        if(this.result == null){
+            this.result = rollResults.stream().mapToInt(Integer::intValue).sum()
+                    + undefinedModifiers.stream().mapToInt(Integer::intValue).sum();
+        }
+        return result;
+    }
 }

@@ -45,7 +45,7 @@ public abstract class BaseCharacter implements Character{
     private Weapon equippedWeapon;
     private Armor equippedArmor;
 
-    public BaseCharacter(BaseCharacter baseCharacter){}
+    public BaseCharacter(){}
 
     public String getName() {
         return name;

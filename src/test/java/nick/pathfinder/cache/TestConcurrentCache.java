@@ -108,6 +108,11 @@ public class TestConcurrentCache {
         public void setCacheId(UUID id) {
             this.id = id;
         }
+
+        @Override
+        public List<String> getClassSkills() {
+            return null;
+        }
     }
 
 

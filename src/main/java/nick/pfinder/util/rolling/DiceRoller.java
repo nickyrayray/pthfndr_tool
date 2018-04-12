@@ -2,8 +2,11 @@ package nick.pfinder.util.rolling;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Created by nickyrayray on 8/24/17.
@@ -49,6 +52,14 @@ public class DiceRoller {
         Integer numDice = numDiceAndNumSides[0].isEmpty() ? 1 : Integer.parseInt(numDiceAndNumSides[0]);
         Integer numSides = Integer.parseInt(numDiceAndNumSides[1]);
         return new DiceRoller(numDice, numSides, undefinedModifiers);
+    }
+
+    public Roll roll(){
+        Random random = new Random();
+        List<Integer> rolls = random.ints(this.numDice , 1, this.numSides+1)
+                .boxed()
+                .collect(Collectors.toList());
+        return new Roll(rolls, this.undefinedModifiers, this.toString());
     }
 
     private static List<Integer> extractModifiersFromModifierSubstring(String modifiersSubString){

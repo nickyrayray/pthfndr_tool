@@ -14,9 +14,8 @@ public class FormulaImpl implements Formula{
     private List<Formula> formulas;
     private String desc;
 
-    public FormulaImpl(String desc){
-        this.formulas = new ArrayList<>();
-        this.desc = desc;
+    public FormulaImpl(List<Formula> formulas){
+        this.formulas = formulas;
     }
 
     @Override
@@ -32,13 +31,4 @@ public class FormulaImpl implements Formula{
         formulas.add(formula);
     }
 
-    public static void main(String[] args) {
-        Formula formula1 = new Number("formula1", 1);
-        Formula formula2 = new Number("formula2", 2);
-        Formula formulaCompilation = new FormulaImpl("formula total");
-        formulaCompilation.addToFormula(formula1);
-        formulaCompilation.addToFormula(formula2);
-        Result res = formulaCompilation.evaluate();
-        System.out.println(res);
-    }
 }
