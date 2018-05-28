@@ -10,7 +10,6 @@ public class Number implements Formula{
 
     private Integer value;
     private String name;
-    private boolean conditional;
 
     public Number(String name, Integer value){
         this.name = name;
@@ -35,7 +34,7 @@ public class Number implements Formula{
 
     @Override
     public Result evaluate() {
-        return new Result().withComponent(name, value, conditional);
+        return new Result().withComponent(name, value, false);
     }
 
     @Override
