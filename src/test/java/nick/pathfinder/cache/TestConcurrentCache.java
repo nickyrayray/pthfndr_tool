@@ -2,8 +2,7 @@ package nick.pathfinder.cache;
 
 import nick.pfinder.cache.PfinderCache;
 import nick.pfinder.cache.impl.PfinderCharacterCacheImpl;
-import nick.pfinder.model.character.BaseCharacter;
-import nick.pfinder.model.character.Character;
+import nick.pfinder.model.character.base.Character;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +13,7 @@ import static org.junit.Assert.*;
 public class TestConcurrentCache {
 
     Map<UUID, Long> memoryAccessLog;
-    PfinderCache<UUID, Character> cache;
+    PfinderCache<UUID, nick.pfinder.model.character.api.Character> cache;
     static final Integer MAX_IN_CACHE = 5;
     static final Long TTL_IN_MILLIS = 10000000L;
 
@@ -95,7 +94,7 @@ public class TestConcurrentCache {
     }
 
 
-    class TestCharacter extends BaseCharacter {
+    class TestCharacter extends Character {
 
         UUID id;
 
