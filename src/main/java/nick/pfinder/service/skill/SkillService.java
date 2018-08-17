@@ -11,10 +11,21 @@ import java.lang.reflect.Method;
 public class SkillService {
 
     public Integer getSkillScore(Character character, String skill) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        String capitalizedSkillName = skill.substring(0,1).toUpperCase() + skill.substring(1).toLowerCase();
-        String methodName = "get" + capitalizedSkillName;
+        String methodName = getMethodNameFromSkillString(skill);
         Method getter = character.getClass().getMethod(methodName);
-        Integer ranks = (int)getter.invoke(character);
-        return ranks;
+        return (int)getter.invoke(character);
+    }
+
+    private String getMethodNameFromSkillString(String skillName){
+        String skillNameFormatted = "get";
+        for(String s : skillName.split(" ")){
+            String capitalizedPart= s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase();
+            skillNameFormatted += capitalizedPart;
+        }
+        return skillNameFormatted;
+    }
+
+    private boolean isSkillAClassSkill(Character character, String skill){
+
     }
 }

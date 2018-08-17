@@ -1,7 +1,6 @@
 package nick.pfinder.cache.impl;
 
 import nick.pfinder.cache.PfinderCache;
-import nick.pfinder.model.character.api.Character;
 
 import java.util.*;
 
