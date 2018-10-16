@@ -26,6 +26,6 @@ public class SkillService {
     }
 
     private boolean isSkillAClassSkill(Character character, String skill){
-
+        return false;
     }
 }
