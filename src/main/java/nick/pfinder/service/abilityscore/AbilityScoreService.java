@@ -7,32 +7,38 @@ import nick.pfinder.model.character.base.Character;
  */
 public class AbilityScoreService {
 
-    public Integer getStrMod(Character character){
+    private Character character;
+
+    public AbilityScoreService(Character character){
+        this.character = character;
+    }
+
+    public Integer getStrMod(){
         Integer abScore = character.getStrength();
         return getMod(abScore);
     }
 
-    public Integer getDexMod(Character character){
+    public Integer getDexMod(){
         Integer abScore = character.getStrength();
         return getMod(abScore);
     }
 
-    public Integer getConMod(Character character){
+    public Integer getConMod(){
         Integer abScore = character.getStrength();
         return getMod(abScore);
     }
 
-    public Integer getIntMod(Character character){
+    public Integer getIntMod(){
         Integer abScore = character.getStrength();
         return getMod(abScore);
     }
 
-    public Integer getWisMod(Character character){
+    public Integer getWisMod(){
         Integer abScore = character.getStrength();
         return getMod(abScore);
     }
 
-    public Integer getChaMod(Character character){
+    public Integer getChaMod(){
         Integer abScore = character.getStrength();
         return getMod(abScore);
 

@@ -10,7 +10,13 @@ import java.lang.reflect.Method;
  */
 public class SkillService {
 
-    public Integer getSkillScore(Character character, String skill) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    private Character character;
+
+    public SkillService(Character character){
+        this.character = character;
+    }
+
+    public Integer getSkillScore(String skill) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         String methodName = getMethodNameFromSkillString(skill);
         Method getter = character.getClass().getMethod(methodName);
         return (int)getter.invoke(character);
@@ -25,7 +31,8 @@ public class SkillService {
         return skillNameFormatted;
     }
 
-    private boolean isSkillAClassSkill(Character character, String skill){
+    public boolean isClassSkill(){
         return false;
     }
+
 }

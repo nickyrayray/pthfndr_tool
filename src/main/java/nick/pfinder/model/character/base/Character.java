@@ -10,7 +10,7 @@ public abstract class Character {
     // Basic info
     private String name;
     private String player;
-    private String alignment; // Should be an enum
+    private String alignment; // Should be an enum?
     private Integer level;
     private String deity;
     private String race; // Should be an enum?
